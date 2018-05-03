@@ -11,8 +11,8 @@ compose.Request.multipart = require('../')
 var request = compose.client
 
 var files = [
-  {path: path.resolve(__dirname, 'fixtures/file1.png')},
-  {path: path.resolve(__dirname, 'fixtures/file2.png')},
+  {path: path.resolve(__dirname, 'fixtures/cat.png')},
+  {path: path.resolve(__dirname, 'fixtures/cat2.png')},
 ]
 files[0].size = fs.statSync(files[0].path).size
 files[1].size = fs.statSync(files[1].path).size

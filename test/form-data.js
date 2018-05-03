@@ -11,8 +11,8 @@ compose.Request.multipart = require('../')
 var request = compose.client
 
 var files = [
-  {path: path.resolve(__dirname, 'fixtures/file1.png')},
-  {path: path.resolve(__dirname, 'fixtures/file2.png')},
+  {path: path.resolve(__dirname, 'fixtures/cat.png')},
+  {path: path.resolve(__dirname, 'fixtures/cat2.png')},
 ]
 files[0].size = fs.statSync(files[0].path).size
 files[1].size = fs.statSync(files[1].path).size
@@ -56,7 +56,7 @@ describe('form-data', () => {
           else if (part.name === 'file') {
             t.equal(part.mime, 'image/png', 'file mime')
             t.equal((await read(part)).length, files[0].size, 'file value')
-            t.equal(part.filename, 'file1.png', 'file name')
+            t.equal(part.filename, 'cat.png', 'file name')
           }
           else if (part.name === 'request') {
             t.equal(part.mime, 'image/request', 'request mime')
@@ -95,7 +95,7 @@ describe('form-data', () => {
           value: fs.createReadStream(files[0].path),
           options: {
             filename: 'topsecret.jpg',
-            contentType: 'image/custom'
+            contentType: 'image/custom',
           }
         },
         batch: [
