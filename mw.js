@@ -23,7 +23,7 @@ module.exports = (multipart) => ({options, options: {headers}}) => {
   }
 
   headers['content-type'] = `multipart/${content}; boundary=${boundary}${rest}`
-  body = generate(multipart, boundary)
+  var body = generate(multipart, boundary)
 
   return {options, body}
 
