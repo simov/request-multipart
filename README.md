@@ -71,28 +71,6 @@ multipart: [
 ]
 ```
 
----
-
-### Internal API
-
-```js
-var options = {
-  // related
-  multipart: [],
-  // form-data
-  multipart: {},
-
-  // optional
-  contentType: 'multipart/related; boundary=',
-  boundary: '',
-  preambleCRLF: true,
-  postambleCRLF: true
-}
-
-
-var {contentType, body} = multipart(options)
-```
-
 
   [npm-version]: https://img.shields.io/npm/v/request-multipart.svg?style=flat-square (NPM Package Version)
   [travis-ci]: https://img.shields.io/travis/simov/request-multipart/master.svg?style=flat-square (Build Status - Travis CI)

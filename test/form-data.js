@@ -32,7 +32,10 @@ describe('form-data', () => {
     server = http.createServer()
     server.on('request', (req, res) => {
       if (req.url === '/file') {
-        res.writeHead(200, {'content-type': 'image/request'})
+        res.writeHead(200, {
+          'content-type': 'image/request',
+          'content-length': files[1].size
+        })
         fs.createReadStream(files[1].path).pipe(res)
       }
       else if (req.url === '/multipart') {
@@ -40,6 +43,11 @@ describe('form-data', () => {
         t.ok(
           /^multipart\/form-data; boundary=[^\s;]+$/.test(req.headers['content-type']),
           'multipart/form-data + default boundary'
+        )
+        t.equal(
+          req.headers['content-length'],
+          77014,
+          'content-length should be set'
         )
         // body
         var form = new formidable.IncomingForm()
@@ -61,7 +69,6 @@ describe('form-data', () => {
           else if (part.name === 'request') {
             t.equal(part.mime, 'image/request', 'request mime')
             t.equal((await read(part)).length, files[1].size, 'request value')
-            t.equal(part.filename, 'file', 'request name') // ?
           }
           else if (part.name === 'options') {
             t.equal(part.mime, 'image/custom', 'options mime')
@@ -69,9 +76,16 @@ describe('form-data', () => {
             t.equal(part.filename, 'topsecret.jpg', 'options name')
           }
           else if (part.name === 'batch') {
-            t.equal(part.mime, 'application/octet-stream', 'batch mime')
-            t.equal((await read(part)).length, files[0].size, 'batch value')
-            t.equal(part.filename, undefined, 'batch name') // ?
+            if (part.filename === 'cat.png') {
+              t.equal(part.mime, 'image/png', 'batch mime')
+              t.equal((await read(part)).length, files[0].size, 'batch value')
+              t.equal(part.filename, 'cat.png', 'batch name')
+            }
+            else if (part.filename === 'cat2.png') {
+              t.equal(part.mime, 'image/png', 'batch mime')
+              t.equal((await read(part)).length, files[1].size, 'batch value')
+              t.equal(part.filename, 'cat2.png', 'batch name')
+            }
           }
         }
         form.on('end', () => {
@@ -96,11 +110,12 @@ describe('form-data', () => {
           options: {
             filename: 'topsecret.jpg',
             contentType: 'image/custom',
+            // knownLength: 5
           }
         },
         batch: [
           fs.createReadStream(files[0].path),
-          fs.createReadStream(files[0].path)
+          fs.createReadStream(files[1].path)
         ]
       }
     })

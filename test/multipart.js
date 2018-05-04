@@ -32,7 +32,10 @@ describe('multipart', () => {
     server = http.createServer()
     server.on('request', (req, res) => {
       if (req.url === '/file') {
-        res.writeHead(200, {'content-type': 'image/request'})
+        res.writeHead(200, {
+          'content-type': 'image/request',
+          'content-length': files[1].size
+        })
         fs.createReadStream(files[1].path).pipe(res)
       }
       else if (req.url === '/multipart') {
@@ -40,6 +43,11 @@ describe('multipart', () => {
         t.ok(
           /^multipart\/related; boundary=[^\s;]+$/.test(req.headers['content-type']),
           'multipart/related + default boundary'
+        )
+        t.equal(
+          req.headers['content-length'],
+          29526,
+          'content-length should be set'
         )
         // body
         var form = new formidable.IncomingForm()

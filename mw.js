@@ -1,19 +1,29 @@
 
-var lib = require('./lib/multipart')
+var uuid = require('uuid')
+var generate = require('./lib/multipart')
 
 
 module.exports = (multipart) => ({options, options: {headers}}) => {
 
-  var content = Object.keys(headers)
+  var header = Object.keys(headers)
     .find((name) => name.toLowerCase() === 'content-type')
 
-  var contentType
-  if (content) {
-    contentType = headers[content]
+  var regexp = /^multipart\/([^\s;]+)(?:; boundary=([^\s;]+))?(.*)/
+  var content = Array.isArray(multipart) ? 'related' : 'form-data'
+  var boundary = uuid()
+  var rest = ''
+
+  if (headers[header]) {
+    var match = headers[header].match(regexp)
+    if (match) {
+      content = match[1]
+      boundary = match[2] || boundary
+      rest = match[3] || ''
+    }
   }
 
-  var {contentType, body} = lib({multipart, contentType})
-  headers['content-type'] = contentType
+  headers['content-type'] = `multipart/${content}; boundary=${boundary}${rest}`
+  body = generate(multipart, boundary)
 
   return {options, body}
 
