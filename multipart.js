@@ -1,5 +1,5 @@
 
-var uuid = require('uuid')
+var uuid = require('uuid').v4
 var generate = require('./lib/multipart')
 
 

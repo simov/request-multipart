@@ -106,10 +106,10 @@ describe('form-data', () => {
         file: fs.createReadStream(files[0].path),
         request: (await compose.stream({url: 'http://localhost:5000/file'})).res,
         options: {
-          value: fs.createReadStream(files[0].path),
+          body: fs.createReadStream(files[0].path),
           options: {
-            filename: 'topsecret.jpg',
-            contentType: 'image/custom',
+            name: 'topsecret.jpg',
+            type: 'image/custom',
             // knownLength: 5
           }
         },
