@@ -1,6 +1,6 @@
 {
   "name": "request-multipart",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Multipart body support for request-compose",
   "keywords": [
     "request",
