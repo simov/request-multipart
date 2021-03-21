@@ -1,4 +1,4 @@
-name: Test
+name: test
 on: [push, pull_request]
 jobs:
   test:
@@ -41,4 +41,4 @@ jobs:
       - name: Coverage
         run: npm run test:cov
       - name: Coveralls
-        run: cat ./coverage/lcov.info | coveralls
+        run: cat ./coverage/lcov.info | npx coveralls
