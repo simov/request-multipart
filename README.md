@@ -170,7 +170,7 @@ DEBUG=req,res,body,json node examples/multipart.js slack
 ```
 
   [npm-version]: https://img.shields.io/npm/v/request-multipart.svg?style=flat-square (NPM Package Version)
-  [gh-actions]: https://img.shields.io/github/workflow/status/simov/request-multipart/test (Build Status - GitHub Actions)
+  [gh-actions]: https://img.shields.io/github/workflow/status/simov/request-multipart/test?style=flat-square (Build Status - GitHub Actions)
   [coveralls-status]: https://img.shields.io/coveralls/simov/request-multipart.svg?style=flat-square (Test Coverage - Coveralls)
 
   [npm]: https://www.npmjs.com/package/request-multipart
