@@ -2,23 +2,25 @@ name: test
 on: [push, pull_request]
 jobs:
   test:
-    name: Test
-    runs-on: ubuntu-latest
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [15.x, 14.x, 12.x, 10.x, 8.x]
+        os: [ubuntu-latest]
+        node: [15, 14, 12, 10, 8]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Set Node.js version
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
       - name: Cache node_modules
         id: cache-modules
         uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ matrix.node-version }}-${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+          key: ${{ matrix.node }}-${{ matrix.os }}-build-${{ hashFiles('package.json') }}
       - name: Build
         if: steps.cache-modules.outputs.cache-hit != 'true'
         run: npm install
@@ -29,16 +31,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node: [14]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Set Node.js version
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
       - name: Build
         run: npm install
       - name: Coverage
         run: npm run test:cov
       - name: Coveralls
-        run: cat ./coverage/lcov.info | npx coveralls
+        run: cat ./coverage/lcov.info | node_modules/.bin/coveralls
