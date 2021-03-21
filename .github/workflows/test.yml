@@ -44,4 +44,6 @@ jobs:
       - name: Coverage
         run: npm run test:cov
       - name: Coveralls
-        run: cat ./coverage/lcov.info | node_modules/.bin/coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
