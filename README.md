@@ -1,7 +1,7 @@
 
 # request-multipart
 
-[![npm-version]][npm] [![travis-ci]][travis] [![coveralls-status]][coveralls]
+[![npm-version]][npm] [![gh-actions]][github] [![coveralls-status]][coveralls]
 
 > _Multipart body support for **[request-compose]**_
 
@@ -170,11 +170,11 @@ DEBUG=req,res,body,json node examples/multipart.js slack
 ```
 
   [npm-version]: https://img.shields.io/npm/v/request-multipart.svg?style=flat-square (NPM Package Version)
-  [travis-ci]: https://img.shields.io/travis/simov/request-multipart/master.svg?style=flat-square (Build Status - Travis CI)
+  [gh-actions]: https://img.shields.io/github/workflow/status/simov/request-multipart/test (Build Status - GitHub Actions)
   [coveralls-status]: https://img.shields.io/coveralls/simov/request-multipart.svg?style=flat-square (Test Coverage - Coveralls)
 
   [npm]: https://www.npmjs.com/package/request-multipart
-  [travis]: https://travis-ci.org/simov/request-multipart
+  [github]: https://github.com/simov/request-multipart/actions
   [coveralls]: https://coveralls.io/github/simov/request-multipart
 
   [request-compose]: https://www.npmjs.com/package/request-compose
